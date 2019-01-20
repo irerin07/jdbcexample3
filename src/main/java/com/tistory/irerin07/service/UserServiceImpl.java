@@ -32,41 +32,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String getPasswdByEmail(String email) {
-        String passwd = null;
+    public User getUserByEmail(String email) {
+        User user = null;
         UserDao userDao = UserDaoImpl.getInstance();
         try(Connection conn = DBUtil.getInstance().getConnection();) {
             ConnectionContextHolder.setConnection(conn);
-            passwd = userDao.getPasswdByEmail(email);
+            user = userDao.getUserByEmail(email);
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return passwd;
-    }
-
-    @Override
-    public Long getIdByEmail(String email) {
-        Long id = 0L;
-        UserDao userDao = UserDaoImpl.getInstance();
-        try(Connection conn = DBUtil.getInstance().getConnection();) {
-            ConnectionContextHolder.setConnection(conn);
-            id = userDao.getIdByEmail(email);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        return id;
-    }
-
-    @Override
-    public String getNicknameByEmail(String email) {
-        String nickName = null;
-        UserDao userDao = UserDaoImpl.getInstance();
-        try(Connection conn = DBUtil.getInstance().getConnection();) {
-            ConnectionContextHolder.setConnection(conn);
-            nickName = userDao.getNickNameByEmail(email);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        return nickName;
+        return user;
     }
 }

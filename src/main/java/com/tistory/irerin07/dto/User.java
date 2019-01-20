@@ -10,11 +10,24 @@ public class User {
     private String passwd;
     private Date regdate;
 
+    public User(){
+
+    }
     public User(String name, String nickname, String email, String passwd) {
         this.name = name;
         this.nickname = nickname;
         this.email = email;
         this.passwd = passwd;
+    }
+
+    public User(Long userId, String nickname, String email, String passwd, Date regdate, String name) {
+        this.userId = userId;
+        this.nickname = nickname;
+        this.email = email;
+        this.passwd = passwd;
+        this.regdate = regdate;
+        this.name = name;
+
     }
 
     public Long getUserId() {
@@ -63,5 +76,17 @@ public class User {
 
     public void setRegdate(Date regdate) {
         this.regdate = regdate;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", passwd='" + passwd + '\'' +
+                ", regdate=" + regdate +
+                '}';
     }
 }

@@ -19,8 +19,11 @@ import java.io.IOException;
 public class UserLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher =
-                req.getRequestDispatcher("/WEB-INF/views/loginform.jsp");
+        String url = req.getParameter("url");
+        System.out.println("login servlet: " + url);
+        req.setAttribute("url", url);
+
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/loginform.jsp");
         requestDispatcher.forward(req, resp);
     }
 
@@ -29,12 +32,13 @@ public class UserLoginServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String email = req.getParameter("email");
         String passwd = req.getParameter("passwd");
+        String url = req.getParameter("url");
+        System.out.println("login doPost: "  + url);
 
 
         UserService userService = UserServiceImpl.getInstance();
-        String encodePasswd = userService.getPasswdByEmail(email);
-        Long userId = userService.getIdByEmail(email);
-        String nickName = userService.getNicknameByEmail(email);
+        User user = userService.getUserByEmail(email);
+        String encodePasswd = user.getPasswd();
         if(encodePasswd != null){
             PasswordEncoder passwordEncoder =
                     PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -42,9 +46,7 @@ public class UserLoginServlet extends HttpServlet {
             if(matches){
                 // 로그인정보를 세션에 저장.
                 HttpSession session = req.getSession();
-                session.setAttribute("emailinfo", email);
-                session.setAttribute("idinfo", userId);
-                session.setAttribute("nicknameinfo", nickName);
+                session.setAttribute("logininfo", user);
 
                 System.out.println("암호가 맞아요.");
             }else{
@@ -52,7 +54,15 @@ public class UserLoginServlet extends HttpServlet {
                 System.out.println("암호가 틀렸어요.");
             }
         }
-        // 로그인 성공했다면
         resp.sendRedirect("/free/list");
+        // 로그인 성공했다면
+//        if(url == null){
+//            resp.sendRedirect("/free/list");
+//        }else {
+//            System.out.println("뭐지 시벌?");
+//            resp.sendRedirect(url);
+//        }
+//        System.out.println(url);
+//        resp.sendRedirect(url);
     }
 }

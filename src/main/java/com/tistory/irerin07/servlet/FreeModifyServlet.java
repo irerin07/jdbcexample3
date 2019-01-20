@@ -17,20 +17,20 @@ import java.io.IOException;
 public class FreeModifyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        String email = (String)session.getAttribute("emailinfo");
-        String nickname = (String)session.getAttribute("nicknameinfo");
-        Long userId = (Long)session.getAttribute("idinfo");
-
-        if(email == null){
-            System.out.println("-_-;;;;; 로그인 부탁!!");
-            resp.sendRedirect("/login");
-            return;
-        }else{
-            System.out.println("로그인 OK");
-        }
-        req.setAttribute("nickname", nickname);
-        req.setAttribute("userId", userId);
+//        HttpSession session = req.getSession();
+//        String email = (String)session.getAttribute("emailinfo");
+//        String nickname = (String)session.getAttribute("nicknameinfo");
+//        Long userId = (Long)session.getAttribute("idinfo");
+//
+//        if(email == null){
+//            System.out.println("-_-;;;;; 로그인 부탁!!");
+//            resp.sendRedirect("/login");
+//            return;
+//        }else{
+//            System.out.println("로그인 OK");
+//        }
+//        req.setAttribute("nickname", nickname);
+//        req.setAttribute("userId", userId);
         RequestDispatcher requestDispatcher =
                 req.getRequestDispatcher("/WEB-INF/views/freewrite.jsp");
         requestDispatcher.forward(req, resp);

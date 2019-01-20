@@ -33,77 +33,28 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public String getPasswdByEmail(String email) {
-        String passwd = null; // return할 타입을 선언한다.
-
+    public User getUserByEmail(String email) {
+        User user = null; // return할 타입을 선언한다.
         Connection conn = ConnectionContextHolder.getConnection();
         try{
-
             try(PreparedStatement ps = conn.prepareStatement(UserDAOSQL.SELECT_BY_EMAIL);) {
                 ps.setString(1, email);
-
                 try(ResultSet rs = ps.executeQuery();){ // SELECT 문장을 실행, executeUpdate() - insert, update, delete
-
                     if (rs.next()) {
-                        passwd = rs.getString(1);
+                        user = new User();
+                        user.setUserId(rs.getLong(1));
+                        user.setNickname(rs.getString(2));
+                        user.setEmail(rs.getString(3));
+                        user.setPasswd(rs.getString(4));
+                        user.setRegdate(rs.getDate(5));
+                        user.setName(rs.getString(6));
                     }
                 }
             }
-
         }catch(Exception ex){
             ex.printStackTrace();
         }
-
-        return passwd;
-    }
-
-    @Override
-    public Long getIdByEmail(String email) {
-        Long id = 0L; // return할 타입을 선언한다.
-
-        Connection conn = ConnectionContextHolder.getConnection();
-        try{
-
-            try(PreparedStatement ps = conn.prepareStatement(UserDAOSQL.SELECT_ID_BY_EMAIL);) {
-                ps.setLong(1, id);
-
-                try(ResultSet rs = ps.executeQuery();){ // SELECT 문장을 실행, executeUpdate() - insert, update, delete
-
-                    if (rs.next()) {
-                        id = rs.getLong(1);
-                    }
-                }
-            }
-
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-        return id;
-    }
-
-    @Override
-    public String getNickNameByEmail(String email) {
-        String nickName = null; // return할 타입을 선언한다.
-
-        Connection conn = ConnectionContextHolder.getConnection();
-        try{
-
-            try(PreparedStatement ps = conn.prepareStatement(UserDAOSQL.SELECT_NICKNAME_BY_EMAIL);) {
-                ps.setString(1, email);
-
-                try(ResultSet rs = ps.executeQuery();){ // SELECT 문장을 실행, executeUpdate() - insert, update, delete
-
-                    if (rs.next()) {
-                        nickName = rs.getString(1);
-                    }
-                }
-            }
-
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-        return nickName;
+        System.out.println(user);
+        return user;
     }
 }

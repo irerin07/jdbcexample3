@@ -142,7 +142,7 @@ public class BoardDaoImpl implements BoardDao{
 
     @Override
     public void modifyBoard(Long id) {
-        
+
 
     }
 }
