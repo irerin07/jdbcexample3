@@ -26,7 +26,7 @@ public class UserLoginServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/loginform.jsp");
         requestDispatcher.forward(req, resp);
     }
-
+    //let me test - Andy
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
